@@ -35,9 +35,9 @@ jobs:
             $0 ~ rx { if (found++) exit; capture=1; next }
             /^##[[:space:]]/ { if (capture) exit }
             { if (capture) print }
-          ' CHANGELOG.md > RELEASE_NOTES.md
+          ' CHANGELOG.md > CHANGELOG.md
 
-          if [ ! -s RELEASE_NOTES.md ]; then
+          if [ ! -s CHANGELOG.md ]; then
             echo "Could not find a CHANGELOG section for $VER" >&2
             echo "💡 Ensure you have a header like: ## [$RAW] - YYYY-MM-DD (or ## $RAW)" >&2
             exit 1
@@ -46,7 +46,7 @@ jobs:
           # Pass as multi-line output
           {
             echo "text<<EOF"
-            cat RELEASE_NOTES.md
+            cat CHANGELOG.md
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
