@@ -1,3 +1,9 @@
+## [0.1.5] - 2025-09-22
+
+- fix worker
+- Added XY
+- Fixed YYY
+
 ## [0.1.4] - 2025-09-22
 
 - fix worker

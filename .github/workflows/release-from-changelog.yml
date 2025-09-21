@@ -50,6 +50,9 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
+          - name: Debug version output
+          run: echo "Version is: ${{ steps.ver.outputs.value }}"
+
       - name: Ensure tag exists (create lightweight tag if missing)
         uses: actions/github-script@v7
         id: ensure_tag
