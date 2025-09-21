@@ -30,14 +30,14 @@ jobs:
           VER="${{ steps.ver.outputs.value }}"       # e.g. v1.2.3
           RAW="${VER#v}"                             # 1.2.3
           # Match either "## [1.2.3]" or "## 1.2.3"
-          awk -v rx="^##[[:space:]]*(\\[?"$RAW"\\]?)([[:space:]]|$)" '
+          awk -v rx="^##[[:space:]]*(\\[?$RAW\\]?)([[:space:]]|$)" '
             BEGIN{ capture=0 }
             $0 ~ rx { if (found++) exit; capture=1; next }
             /^##[[:space:]]/ { if (capture) exit }
             { if (capture) print }
-          ' CHANGELOG.md > CHANGELOG.md
+          ' CHANGELOG.md > _changelog_section.md
 
-          if [ ! -s CHANGELOG.md ]; then
+          if [ ! -s _changelog_section.md ]; then
             echo "Could not find a CHANGELOG section for $VER" >&2
             echo "💡 Ensure you have a header like: ## [$RAW] - YYYY-MM-DD (or ## $RAW)" >&2
             exit 1
@@ -46,7 +46,7 @@ jobs:
           # Pass as multi-line output
           {
             echo "text<<EOF"
-            cat CHANGELOG.md
+            cat _changelog_section.md
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
